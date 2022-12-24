@@ -22,15 +22,15 @@ impl Vector {
     pub fn normalize(&mut self) {
         let length = self.x.powi(2) + self.y.powi(2);
         let norm = length.sqrt();
-        self.x = self.x / norm;
-        self.y = self.y / norm;
+        self.x /= norm;
+        self.y /= norm;
     }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::f64::consts::{FRAC_1_PI, FRAC_2_PI, FRAC_PI_6};
+    use std::f64::consts::FRAC_PI_6;
 
     #[test]
     fn test_normalize() {
