@@ -38,7 +38,7 @@ impl Vector {
             INFINITY
         } else {
             self.y
-        }
+        };
     }
 }
 
