@@ -1,3 +1,5 @@
+use super::constants::INFINITY;
+
 #[derive(PartialEq, Debug)]
 pub struct Vector {
     pub x: f64,
@@ -24,6 +26,19 @@ impl Vector {
         let norm = length.sqrt();
         self.x /= norm;
         self.y /= norm;
+    }
+
+    pub fn handle_infinite(&mut self) {
+        self.x = if self.x.is_infinite() {
+            INFINITY
+        } else {
+            self.x
+        };
+        self.y = if self.y.is_infinite() {
+            INFINITY
+        } else {
+            self.y
+        }
     }
 }
 
@@ -82,5 +97,20 @@ mod tests {
         vector.deg_rotate(60.0);
         assert!(vector.x - 0.133974 < 1e-6);
         assert!(vector.y + 2.232050 < 1e-6);
+    }
+
+    #[test]
+    fn test_restrain() {
+        let mut v = Vector { x: 10.0, y: 4.0 };
+        v.x = 4.0 / 0.0;
+        v.y = 4.0 / 0.0;
+        v.handle_infinite();
+        assert_eq!(
+            Vector {
+                x: INFINITY,
+                y: INFINITY
+            },
+            v
+        );
     }
 }
