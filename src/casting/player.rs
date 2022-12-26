@@ -23,9 +23,9 @@ impl Player {
         self.position.y += direction.y * DISPLACEMENT_STEP;
     }
 
-    pub fn turn(&mut self, side: f64) {
-        self.direction.deg_rotate(ROTATE_STEP * side.signum());
-        self.plane.deg_rotate(ROTATE_STEP * side.signum());
+    pub fn turn(&mut self, angle: f64) {
+        self.direction.deg_rotate(angle);
+        self.plane.deg_rotate(angle);
     }
 }
 
@@ -49,11 +49,17 @@ mod tests {
     #[test]
     fn test_walk() {
         let mut player = Player::new(3.0, 6.0);
-        let direction = Vector { x: 1.0, y: 2.0 };
+        let direction = Vector::new(1.0, 2.0);
         player.walk(direction);
         assert!((7.472135 - player.position.x).abs() < 10e6);
         assert!((14.944271 - player.position.y).abs() < 10e6);
     }
 
     //TODO test turn
+    #[test]
+    fn test_turn() {
+        let mut player = Player::new(3.0, 6.0);
+        player.turn(100.0);
+        assert!(player.direction.dot_product(player.plane) < 1e-8);
+    }
 }
