@@ -28,6 +28,14 @@ impl Vector {
         self.y /= norm;
     }
 
+    pub fn cross_product(&self, vector: Self) -> f64 {
+        self.x * vector.y - self.y * vector.x
+    }
+
+    pub fn dot_product(&self, vector: Self) -> f64 {
+        self.x * vector.x + self.y * vector.y
+    }
+
     pub fn handle_infinite(&mut self) {
         self.x = if self.x.is_infinite() {
             INFINITY
@@ -100,7 +108,35 @@ mod tests {
     }
 
     #[test]
-    fn test_restrain() {
+    fn test_cross_product() {
+        let v_1 = Vector::new(1.0, 3.0);
+        let v_2 = Vector::new(4.0, 3.0);
+        assert_eq!(-9.0, v_1.cross_product(v_2));
+    }
+
+    #[test]
+    fn test_cross_product_paralell() {
+        let v_1 = Vector::new(1.0, 4.0);
+        let v_2 = Vector::new(0.25, 1.0);
+        assert_eq!(0.0, v_1.cross_product(v_2));
+    }
+
+    #[test]
+    fn test_dot_product() {
+        let v_1 = Vector::new(1.0, 2.0);
+        let v_2 = Vector::new(1.0, 5.0);
+        assert_eq!(11.0, v_1.dot_product(v_2));
+    }
+
+    #[test]
+    fn test_dot_product_perpendicular() {
+        let v_1 = Vector::new(0.0, 4.0);
+        let v_2 = Vector::new(3.0, 0.0);
+        assert_eq!(0.0, v_1.dot_product(v_2));
+    }
+
+    #[test]
+    fn test_handle_infinite() {
         let mut v = Vector { x: 10.0, y: 4.0 };
         v.x = 4.0 / 0.0;
         v.y = 4.0 / 0.0;
