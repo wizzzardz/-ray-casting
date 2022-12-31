@@ -51,11 +51,11 @@ mod tests {
         let mut player = Player::new(3.0, 6.0);
         let direction = Vector::new(1.0, 2.0);
         player.walk(direction);
-        assert!((7.472135 - player.position.x).abs() < 10e6);
-        assert!((14.944271 - player.position.y).abs() < 10e6);
+        dbg!(&player.position);
+        assert!((3.447213 - player.position.x).abs() < 10e-6);
+        assert!((6.894427 - player.position.y).abs() < 10e-6);
     }
 
-    //TODO test turn
     #[test]
     fn test_turn() {
         let mut player = Player::new(3.0, 6.0);
