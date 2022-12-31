@@ -1,17 +1,30 @@
 use super::{constants::FIELD_SPACING, player::Player, types::Vector};
 
-pub struct Ray {
+pub struct Ray<'a> {
     pub direction: Vector,
+    pub player: &'a Player,
 }
 
-impl Ray {
-    pub fn new(player: Player, camera_x: f64) -> Self {
+impl<'a> Ray<'a> {
+    pub fn new(player: &'a Player) -> Self {
         let mut ray = Vector {
-            x: camera_x * player.plane.x + player.direction.x,
-            y: camera_x * player.plane.y + player.direction.y,
+            x: -1.0 * player.plane.x + player.direction.x,
+            y: -1.0 * player.plane.y + player.direction.y,
         };
         ray.normalize();
-        Ray { direction: ray }
+        Ray {
+            direction: ray,
+            player,
+        }
+    }
+
+    pub fn update_direction(&mut self, camera_x: f64) {
+        let mut ray = Vector {
+            x: camera_x * self.player.plane.x + self.player.direction.x,
+            y: camera_x * self.player.plane.y + self.player.direction.y,
+        };
+        ray.normalize();
+        self.direction = ray;
     }
 
     pub fn get_initial_deltas(&self, player: Player) -> Vector {
@@ -38,3 +51,18 @@ impl Ray {
         v
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_new_ray() {
+        let player = Player::new(1.0, 2.0);
+        let ray = Ray::new(&player);
+    }
+}
+
+// TODO test ray
+// DDA algo
+// Perform fisheye correction
