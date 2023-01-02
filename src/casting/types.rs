@@ -95,7 +95,6 @@ mod tests {
         assert!(vector.y - 2.232050 < 1e-6);
         // 60
         vector.deg_rotate(30.0);
-        dbg!(&vector);
         assert!(vector.x + 1.232050 < 1e-6);
         assert!(vector.y - 1.866025 < 1e-6);
         // 150
