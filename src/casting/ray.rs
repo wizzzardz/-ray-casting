@@ -32,6 +32,9 @@ impl<'a> Ray<'a> {
             x: self.player.position.x.floor() + 0.5,
             y: self.player.position.y.floor() + 0.5,
         };
+        // TODO Check in which direction we're shooting the ray, 
+        // if we're looking towards the WEST, we'll still be calculation Lx to EAST. 
+        // If we're looking towards SOUTH, we'll still be calculation Ly to NORTH.
         let lx = FIELD_SPACING / 2.0 - (self.player.position.x - map_square.x);
         let ly = FIELD_SPACING / 2.0 - (self.player.position.y - map_square.y);
         dbg!(lx);
@@ -39,6 +42,7 @@ impl<'a> Ray<'a> {
             x: lx / self.direction.x,
             y: ly / self.direction.y,
         };
+        // TODO replace by constructor of Vector and handle infinity in the constructor
         v.handle_infinite();
         v
     }
