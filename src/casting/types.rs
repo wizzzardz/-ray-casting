@@ -8,7 +8,9 @@ pub struct Vector {
 
 impl Vector {
     pub fn new(x: f64, y: f64) -> Self {
-        Vector { x: x, y: y }
+        let mut v = Vector { x, y };
+        v.handle_infinite();
+        v
     }
 
     pub fn rad_rotate(&mut self, alpha: f64) {
@@ -72,7 +74,6 @@ mod tests {
         assert!(vector.y - 2.232050 < 1e-6);
         // 2PI/6
         vector.rad_rotate(FRAC_PI_6);
-        dbg!(&vector);
         assert!(vector.x + 1.232050 < 1e-6);
         assert!(vector.y - 1.866025 < 1e-6);
         // 5PI/6
