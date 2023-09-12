@@ -28,18 +28,18 @@ impl Ray {
             x: player.position.x.floor() + 0.5,
             y: player.position.y.floor() + 0.5,
         };
-        let middel = FIELD_SPACING / 2.0;
+        let middle = FIELD_SPACING / 2.0;
         let diff_center_x = player.position.x - map_square.x;
         let diff_center_y = player.position.y - map_square.y;
         let (lx, ly) = match self.direction {
             Vector {
                 x: x @ 0.0..,
                 y: y @ 0.0..,
-            } => (middel - diff_center_x, middel - diff_center_y),
+            } => (middle - diff_center_x, middle - diff_center_y),
             Vector {
                 x: x @ f64::NEG_INFINITY..,
                 y: y @ 0.0..,
-            } => (middel + diff_center_x, middel - diff_center_y),
+            } => (middle + diff_center_x, middle - diff_center_y),
             // TODO handle all cases
             _ => panic!("not handled"),
         };
